@@ -3,17 +3,14 @@ fun main() {
         return values
             .map { it.toInt() }
             .windowed(2)
-            .count { (first, second) -> first < second }
+            .count { it.first() < it.last() }
     }
 
     fun part2(values: List<String>): Int {
         return values
-            .asSequence()
             .map { it.toInt() }
-            .windowed(3)
-            .map { it.sum() }
-            .windowed(2)
-            .count { (first, second) -> first < second }
+            .windowed(4)
+            .count { it.first() < it.last() }
     }
 
     val testInput = readInput("Day01_test")
