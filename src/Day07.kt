@@ -33,8 +33,8 @@ fun main() {
         val fuelCost = averagePositionRange
             .map { position ->
                 position to positions.sumOf {
-                val diff = abs(it - position)
-                diff.times(diff + 1).div(2)
+                    val diff = abs(it - position)
+                    diff.times(diff + 1).div(2)
                 }
             }
             .onEach { println(it) }
