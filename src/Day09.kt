@@ -34,12 +34,16 @@ class HeightMap(
     private val data: List<List<Int>>
 ) {
     private val lowPoints = data.mapIndexed { row, columns ->
-        columns.filterIndexed { column, height ->
-            height < getAdjacent(Location(row, column)).minOf { it }
+        columns.mapIndexedNotNull { column, height ->
+            if (height < getAdjacent(Location(row, column)).minOf { it }) {
+                Location(row, column)
+            } else {
+                null
+            }
         }
     }.flatten()
 
-    val riskLevel = lowPoints.sumOf { it + 1 }
+    val riskLevel = lowPoints.sumOf { data[it.row][it.column] + 1 }
 
     val basins = findAllBasin()
 
@@ -52,11 +56,14 @@ class HeightMap(
         println()
         for (row in data.indices) {
             for (column in data[row].indices) {
+                val location = Location(row, column)
                 print(
-                    if (basinLocations.contains(Location(row, column)))
-                        '+'
-                    else
-                        '-'
+                    when {
+                        lowPoints.contains(location) -> '~'
+                        basinLocations.contains(location) -> '-'
+                        else -> '+'
+                    }
+
                 )
                 print(' ')
             }
