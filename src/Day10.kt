@@ -1,13 +1,16 @@
+import java.util.*
+
 fun main() {
     fun part1(values: List<String>): Int {
         return values.mapNotNull { input ->
-            val stack = mutableListOf<Tag>()
+            val stack = Stack<Tag>()
 
             for (tag in input.map { Tag.from(it) }) {
                 when {
                     tag.isOpen -> stack += tag
-                    stack.lastOrNull()?.bracket == tag.bracket
-                            && stack.lastOrNull()?.isOpen == true -> stack.removeLast()
+                    stack.isNotEmpty()
+                            && stack.peek().bracket == tag.bracket
+                            && stack.peek().isOpen -> stack.pop()
                     else -> return@mapNotNull tag
                 }
             }
@@ -27,13 +30,14 @@ fun main() {
 
     fun part2(values: List<String>): Long {
         return values.mapNotNull { input ->
-            val stack = mutableListOf<Tag>()
+            val stack = Stack<Tag>()
 
             for (tag in input.map { Tag.from(it) }) {
                 when {
-                    tag.isOpen -> stack += tag
-                    stack.lastOrNull()?.bracket == tag.bracket
-                            && stack.lastOrNull()?.isOpen == true -> stack.removeLast()
+                    tag.isOpen -> stack.push(tag)
+                    stack.isNotEmpty()
+                            && stack.peek().bracket == tag.bracket
+                            && stack.peek().isOpen -> stack.pop()
                     else -> return@mapNotNull null
                 }
             }
