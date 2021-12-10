@@ -19,7 +19,7 @@ fun main() {
         }
             .groupingBy { it }.eachCount()
             .map {
-                it.value * when(it.key.bracket){
+                it.value * when(it.key.bracket) {
                     Bracket.Parentheses -> 3
                     Bracket.Square -> 57
                     Bracket.Curly -> 1197
