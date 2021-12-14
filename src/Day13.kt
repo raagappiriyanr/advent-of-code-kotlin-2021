@@ -69,7 +69,9 @@ class Paper(
     }
 
     fun foldCompletely() {
-        folds.forEach { fold(it) }
+        while (folds.isNotEmpty()) {
+            fold(folds.poll())
+        }
     }
 
     private fun fold(fold: Fold) {
