@@ -139,11 +139,6 @@ class HeightMap(
     }
 }
 
-data class Location(
-    val row: Int,
-    val column: Int,
-)
-
 data class Basin(
     val locations: List<Location>
 )
